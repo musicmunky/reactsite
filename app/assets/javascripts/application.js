@@ -15,9 +15,9 @@
 //= require jquery-1.12.1.min
 //= require jquery-ui-1.10.4.custom
 //= require jquery.turbolinks
-//= require fusionlib
 //= require bootstrap.min
 //= require jquery.dataTables.min
+//= require fusionlib
 //= require reactsite
 //= require turbolinks
 //= require react
