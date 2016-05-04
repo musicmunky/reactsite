@@ -1,4 +1,3 @@
-
 this.RecordForm = React.createClass({
 
 	getInitialState: function() {
@@ -44,43 +43,43 @@ this.RecordForm = React.createClass({
 	render: function() {
 		return React.DOM.form({
 			onSubmit: this.handleSubmit,
-			className: 'form-inline'
-		}, React.DOM.div({
-			className: 'form-group',
-			style: { marginRight:"20px" }
-		}, React.DOM.input({
-			type: 'text',
-			className: 'form-control',
-			placeholder: 'Date',
-			name: 'date',
-			value: this.state.date,
-			onChange: this.handleChange
-		})), React.DOM.div({
-			className: 'form-group',
-			style: { marginRight:"20px" }
-		}, React.DOM.input({
-			type: 'text',
-			className: 'form-control',
-			placeholder: 'Title',
-			name: 'title',
-			value: this.state.title,
-			onChange: this.handleChange
-		})), React.DOM.div({
-			className: 'form-group',
-			style: { marginRight:"20px" }
-		}, React.DOM.input({
-			type: 'number',
-			className: 'form-control',
-			placeholder: 'Amount',
-			name: 'amount',
-			value: this.state.amount,
-			onChange: this.handleChange
-		})), React.DOM.button({
-			type: 'submit',
-			className: 'btn btn-primary',
-			style: { marginRight:"20px" },
-			disabled: !this.valid()
-		}, 'Create record'));
+			className: 'form-inline'},
+				React.DOM.div({
+					className: 'form-group',
+					style: { marginRight:"20px" }},
+					React.DOM.input({
+						type: 'text',
+						className: 'form-control',
+						placeholder: 'Date',
+						name: 'date',
+						value: this.state.date,
+						onChange: this.handleChange})),
+				React.DOM.div({
+					className: 'form-group',
+					style: { marginRight:"20px" }},
+					React.DOM.input({
+						type: 'text',
+						className: 'form-control',
+						placeholder: 'Title',
+						name: 'title',
+						value: this.state.title,
+						onChange: this.handleChange})),
+				React.DOM.div({
+					className: 'form-group',
+					style: { marginRight:"20px" }},
+					React.DOM.input({
+						type: 'number',
+						className: 'form-control',
+						placeholder: 'Amount',
+						name: 'amount',
+						value: this.state.amount,
+						onChange: this.handleChange})),
+				React.DOM.button({
+					type: 'submit',
+					className: 'btn btn-primary',
+					style: { marginRight:"20px" },
+					disabled: !this.valid()},
+					'Create record'));
 	}
 });
 

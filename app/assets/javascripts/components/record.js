@@ -64,46 +64,57 @@ this.Record = React.createClass({
 	recordRow: function() {
 		var dt = new Date(this.props.record.date);
 		var dstr = (dt.getMonth() + 1) + "/" + (dt.getDate() + 1) + "/" + dt.getFullYear();
+		var amntclr = parseFloat(this.props.record.amount) >= 0 ? "#000" : "#F00";
 		return React.DOM.tr(null,
-			React.DOM.td(null, dstr),
+			React.DOM.td({style:{textAlign:"center"}}, dstr),
 			React.DOM.td(null, this.props.record.title),
-			React.DOM.td(null, amountFormat(this.props.record.amount)),
-			React.DOM.td(null,
+			React.DOM.td({style:{textAlign:"center", color:amntclr}}, amountFormat(this.props.record.amount)),
+			React.DOM.td({style: {textAlign:"center"}},
 				React.DOM.a({
 					className: 'btn btn-default',
-					onClick: this.handleToggle
-				}, 'Edit'),
+					style: {marginRight: "20px"},
+					onClick: this.handleToggle},
+					'Edit'),
 				React.DOM.a({
 					className: 'btn btn-danger',
-					onClick: this.handleDelete
-				}, 'Delete')
+					onClick: this.handleDelete},
+					'Delete')
 			)
 		);
 	},
 
 	recordForm: function() {
-		return React.DOM.tr(null, React.DOM.td(null, React.DOM.input({
-			className: 'form-control',
-			type: 'text',
-			defaultValue: this.props.record.date,
-			ref: 'date'
-		})), React.DOM.td(null, React.DOM.input({
-			className: 'form-control',
-			type: 'text',
-			defaultValue: this.props.record.title,
-			ref: 'title'
-		})), React.DOM.td(null, React.DOM.input({
-			className: 'form-control',
-			type: 'number',
-			defaultValue: this.props.record.amount,
-			ref: 'amount'
-		})), React.DOM.td(null, React.DOM.a({
-			className: 'btn btn-default',
-			onClick: this.handleEdit
-		}, 'Update'), React.DOM.a({
-			className: 'btn btn-danger',
-			onClick: this.handleToggle
-		}, 'Cancel')));
+		return React.DOM.tr(null,
+			React.DOM.td(null,
+				React.DOM.input({
+					className: 'form-control',
+					style:{textAlign:"center"},
+					type: 'text',
+					defaultValue: this.props.record.date,
+					ref: 'date'})),
+			React.DOM.td(null,
+				React.DOM.input({
+					className: 'form-control',
+					type: 'text',
+					defaultValue: this.props.record.title,
+					ref: 'title'})),
+			React.DOM.td(null,
+				React.DOM.input({
+					className: 'form-control',
+					style:{textAlign:"center"},
+					type: 'number',
+					defaultValue: this.props.record.amount,
+					ref: 'amount'})),
+			React.DOM.td({style: {textAlign:"center"}},
+				React.DOM.a({
+					className: 'btn btn-default',
+					style: {marginRight: "20px"},
+					onClick: this.handleEdit},
+					'Update'),
+				React.DOM.a({
+					className: 'btn btn-danger',
+					onClick: this.handleToggle},
+					'Cancel')));
 	},
 
 	render: function() {

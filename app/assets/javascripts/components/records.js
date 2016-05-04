@@ -1,4 +1,3 @@
-
 this.Records = React.createClass({
 
 	getInitialState: function() {
@@ -72,38 +71,44 @@ this.Records = React.createClass({
 	render: function() {
 		var record;
 		return React.DOM.div({
-			className: 'records'
-		},
+			className: 'records'},
 			React.DOM.h2({
-				className: 'title'
-			}, 'Records'),
+				className: 'title'},
+				'Records'),
 			React.DOM.div({
-				className: 'row'
-			},
+				className: 'row'},
 				React.createElement(AmountBox, {
 					type: 'success',
 					amount: this.credits(),
-					text: 'Credit'
-				}),
+					text: 'Credit'}),
 				React.createElement(AmountBox, {
 					type: 'danger',
 					amount: this.debits(),
-					text: 'Debit'
-				}),
+					text: 'Debit'}),
 				React.createElement(AmountBox, {
 					type: 'info',
 					amount: this.balance(),
-					text: 'Balance'
-				})
+					text: 'Balance'})
 			),
 			React.createElement(RecordForm, {
-				handleNewRecord: this.addRecord
-			}),
+				handleNewRecord: this.addRecord}),
 			React.DOM.hr(null),
 			React.DOM.table({
-				className: 'table table-bordered'
-			},
-				React.DOM.thead(null, React.DOM.tr(null, React.DOM.th(null, 'Date'), React.DOM.th(null, 'Title'), React.DOM.th(null, 'Amount'), React.DOM.th(null, 'Actions'))),
+				className: 'table table-bordered'},
+				React.DOM.thead(null,
+					React.DOM.tr(null,
+						React.createElement("th", {
+							style:{width:"150px", textAlign:"center"}},
+							'Date'),
+						React.createElement("th", {
+							style:{width:"300px"}},
+							"Title"),
+						React.createElement("th", {
+							style:{width:"150px", textAlign:"center"}},
+							"Amount"),
+						React.createElement("th", {
+							style:{textAlign:"center"}},
+							"Actions"))),
 				React.DOM.tbody(null, (function() {
 					var i, len, ref, results;
 					ref = this.state.records;
