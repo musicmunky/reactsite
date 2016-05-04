@@ -14,3 +14,5 @@
 
 config/database.yml
 config/secrets.yml
+passenger.3015.pid
+passenger.3015.pid.lock

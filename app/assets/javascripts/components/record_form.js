@@ -46,7 +46,8 @@ this.RecordForm = React.createClass({
 			onSubmit: this.handleSubmit,
 			className: 'form-inline'
 		}, React.DOM.div({
-			className: 'form-group'
+			className: 'form-group',
+			style: { marginRight:"20px" }
 		}, React.DOM.input({
 			type: 'text',
 			className: 'form-control',
@@ -55,7 +56,8 @@ this.RecordForm = React.createClass({
 			value: this.state.date,
 			onChange: this.handleChange
 		})), React.DOM.div({
-			className: 'form-group'
+			className: 'form-group',
+			style: { marginRight:"20px" }
 		}, React.DOM.input({
 			type: 'text',
 			className: 'form-control',
@@ -64,7 +66,8 @@ this.RecordForm = React.createClass({
 			value: this.state.title,
 			onChange: this.handleChange
 		})), React.DOM.div({
-			className: 'form-group'
+			className: 'form-group',
+			style: { marginRight:"20px" }
 		}, React.DOM.input({
 			type: 'number',
 			className: 'form-control',
@@ -75,6 +78,7 @@ this.RecordForm = React.createClass({
 		})), React.DOM.button({
 			type: 'submit',
 			className: 'btn btn-primary',
+			style: { marginRight:"20px" },
 			disabled: !this.valid()
 		}, 'Create record'));
 	}

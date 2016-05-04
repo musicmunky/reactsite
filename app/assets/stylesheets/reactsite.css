@@ -16,6 +16,15 @@ html, body {
 	background-color:#EEE !important;
 }
 
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: 0;
+}
+
 .nav > li > a {
 	display: -webkit-inline-box;
 }
