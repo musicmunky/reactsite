@@ -7,4 +7,6 @@ Initially begin as a way for me to learn ReactJS, now I'm building a page to hol
 * jQuery 1.12.x
 * Some flavor of linux
 * Apache...or whatever...
+* Latest version of ReactJS
+* Page for raw PGA data: http://www.pgatour.com/data/players/
 * You'll need to create new database.yml and secrets.yml files, as I haven't committed those for obvious reasons
