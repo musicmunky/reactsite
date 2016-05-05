@@ -1,6 +1,6 @@
 == README
 
-Initially begin as a way for me to learn ReactJS, now I'm building a page to hold and lookup data for players on the PGA tour.
+Initially begun as a way for me to learn ReactJS, now I'm building a page to hold and lookup data for players on the PGA tour.
 
 * Rails 4.x
 * MySQL 5.x
