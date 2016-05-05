@@ -1,28 +1,10 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Initially begin as a way for me to learn ReactJS, now I'm building a page to hold and lookup data for players on the PGA tour.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Rails 4.x
+* MySQL 5.x
+* jQuery 1.12.x
+* Some flavor of linux
+* Apache...or whatever...
+* You'll need to create new database.yml and secrets.yml files, as I haven't committed those for obvious reasons
