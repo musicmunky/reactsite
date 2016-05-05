@@ -16,7 +16,7 @@ Rails.application.configure do
 	# Do not eager load code on boot.
 	config.eager_load = false
 
-	config.assets.precompile += %w( utils.js )
+	config.assets.precompile += %w( record_utils.js player_utils.js )
 
 	# Show full error reports and disable caching.
 	config.consider_all_requests_local       = true

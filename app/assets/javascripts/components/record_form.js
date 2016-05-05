@@ -43,6 +43,7 @@ this.RecordForm = React.createClass({
 	render: function() {
 		return React.DOM.form({
 			onSubmit: this.handleSubmit,
+			style: {textAlign: "center"},
 			className: 'form-inline'},
 				React.DOM.div({
 					className: 'form-group',
@@ -77,7 +78,6 @@ this.RecordForm = React.createClass({
 				React.DOM.button({
 					type: 'submit',
 					className: 'btn btn-primary',
-					style: { marginRight:"20px" },
 					disabled: !this.valid()},
 					'Create record'));
 	}

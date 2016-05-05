@@ -1,0 +1,2 @@
+class PgaTourYearsController < ApplicationController
+end

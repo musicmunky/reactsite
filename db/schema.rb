@@ -11,7 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160502171939) do
+ActiveRecord::Schema.define(version: 20160504174505) do
+
+  create_table "pga_tour_years", force: :cascade do |t|
+    t.integer  "tour_year",  limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  create_table "pga_tour_years_players", id: false, force: :cascade do |t|
+    t.integer "player_id",        limit: 4
+    t.integer "pga_tour_year_id", limit: 4
+  end
+
+  add_index "pga_tour_years_players", ["pga_tour_year_id"], name: "index_pga_tour_years_players_on_pga_tour_year_id", using: :btree
+  add_index "pga_tour_years_players", ["player_id"], name: "index_pga_tour_years_players_on_player_id", using: :btree
+
+  create_table "players", force: :cascade do |t|
+    t.string   "nameL",      limit: 255
+    t.string   "nameF",      limit: 255
+    t.string   "nameMI",     limit: 255
+    t.string   "nameShort",  limit: 255
+    t.string   "ct",         limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "records", force: :cascade do |t|
     t.string   "title",      limit: 255

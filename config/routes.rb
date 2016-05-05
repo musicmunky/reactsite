@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
-  resources :records
+	resources :pga_tour_years
+	resources :players
+	resources :records
+
 	get 'pages/index'
 	root 'pages#index'
 
