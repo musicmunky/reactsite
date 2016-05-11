@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
 
 	resources :pga_tour_years
-	resources :players
+
+	resources :players do
+		member do
+			get "searchPlayerNames"
+		end
+	end
+
 	resources :records
 
 	get 'pages/index'
