@@ -41,13 +41,10 @@ this.Players = React.createClass({
 						if(data['status'] == "success") {
 							var career = data['content']['player']['career'];
 							var bio = data['content']['player']['bio'];
+							var pname = data['content']['player']['name'];
+							_this.setState({selectedPlayer: {name: pname, money: 0}});
 // 							console.log("PLAYER INFO: " + JSON.stringify(bio));
 // 							console.log("CAREER INFO: " + JSON.stringify(career));
-
-							var pname = bio['plrs'][0]['personalInfo']['name']['first'] + " " + bio['plrs'][0]['personalInfo']['name']['last'];
-							//_this.refs.player_name.innerText = pname;
-							//_this.setState({players: data['content']['players']});
-							_this.setState({selectedPlayer: {name: pname, money: 0}});
 						}
 					};
 				})(this)

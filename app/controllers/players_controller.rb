@@ -19,19 +19,35 @@ class PlayersController < ApplicationController
 			require 'net/http'
 			require 'json'
 
+			@player = Player.find(pid)
+
 			ppid = "%05d" % pid.to_i
 
-			uri_career  = URI("http://www.pgatour.com/data/players/#{ppid}/career.json")
-			json_career = Net::HTTP.get(uri_career)
-			career_info = JSON.parse(json_career)
+			career_info = {}
+			bio_info = {}
 
-			uri_bio	 = URI("http://www.pgatour.com/data/players/#{ppid}/bio.json")
-			json_bio = Net::HTTP.get(uri_bio)
-			bio_info = JSON.parse(json_bio)
+			begin
+				uri_career  = URI("http://www.pgatour.com/data/players/#{ppid}/career.json")
+				json_career = Net::HTTP.get(uri_career)
+				career_info = JSON.parse(json_career)
+			rescue => c_err
+				career_info['error'] = true
+				career_info['error_message'] = c_err.message
+			end
+
+			begin
+				uri_bio	 = URI("http://www.pgatour.com/data/players/#{ppid}/bio.json")
+				json_bio = Net::HTTP.get(uri_bio)
+				bio_info = JSON.parse(json_bio)
+			rescue => b_err
+				bio_info['error'] = true
+				bio_info['error_message'] = b_err.message
+			end
 
 			player = {}
 			player['career']	= career_info
 			player['bio']		= bio_info
+			player['name']		= "#{@player.nameF} #{@player.nameL}"
 			content['player']	= player
 
 			response['status']  = "success"
