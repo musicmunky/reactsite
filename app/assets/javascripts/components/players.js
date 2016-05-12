@@ -94,11 +94,7 @@ this.Players = React.createClass({
 					return results;
 				}).call(this))
 			),
-			React.DOM.div({className:"w100fl"},
-				React.createElement("h3", {className:"w100fl"}, "Player Info"),
-				React.createElement("div", {className:"w100fl"},
-					React.createElement("div", {className:"w100fl", id:"player_name"}),
-					React.createElement("div", {className:"w100fl", id:"total_money"})))
+			React.createElement(PlayerInfo, null)
 		);
 	}
 
