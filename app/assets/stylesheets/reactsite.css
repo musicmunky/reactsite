@@ -16,6 +16,17 @@ html, body {
 	background-color:#EEE !important;
 }
 
+table tbody { height:250px; overflow-y:scroll; display:block;float:left;width:100%;background-color:#FAFAFA; }
+table thead { display:block; }
+table thead tr{ border:none;width:100%;display:block; }
+table tbody tr{ border:none;width:100%;display:block; }
+table tr td { border: 1px solid; border-collapse:collapse; }
+table tr th { width: 50%;border-bottom:2px solid #AAA !important; }
+
+
+#player_search_table tr:hover td { background-color:#EAEAEA; }
+#player_search_table th { width:calc(50% - 9px);float:left;display:block;border-right:none; }
+#player_search_table td { width: 50%;float: left;display: block;min-height: 40px;height: 40px;line-height: 24px; }
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -619,5 +630,3 @@ p {
 .alert a {text-decoration:underline !important;}
 
 .btn-primary {background-color:#fff !important; color:#666 !important; border:1px solid #ccc !important;}
-
-table thead tr{ border:none;}

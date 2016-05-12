@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
 	resources :players do
 		member do
+			post "getPlayerInfo"
 			get "searchPlayerNames"
 		end
 	end

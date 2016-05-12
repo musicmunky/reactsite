@@ -22,15 +22,10 @@ this.Players = React.createClass({
 		});
 	},
 
-	handleSearch: function() {
-		var pname = FUSION.get.node("player_search_box").value;
+	handleSearch: function(e) {
+		var pname = e.target.value;
+		this.setState({ players: [] });
 		if(!FUSION.lib.isBlank(pname) && pname.length > 2) {
-
-			this.setState({ players: [] });
-
-			//console.log("PLAYERS: " + this.state.players);
-
-
 			return $.ajax({
 				method: 'GET',
 				beforeSend: function(xhr) {
@@ -45,47 +40,15 @@ this.Players = React.createClass({
 				success: (function(_this) {
 					return function(data) {
 						if(data['status'] == "success") {
-							var results = data['content']['players'];
-							var tbl = FUSION.get.node("player_search_table");
-							//tbl.tBodies[0].innerHTML = "";
-							if(results.length > 0) {
-								var i, len, ref, results;
-								ref = _this.state.players;
-// 								results = [];
-								var player;
-								for (i = 0, len = results.length; i < len; i++) {
-									player = results[i];
-									results.push(React.createElement(Player, {
-										key: results[i].id,
-										player: player,
-										//handleDeleteRecord: this.deletePlayer,
-										//handleEditRecord: this.updateRecord
-									}));
-								}
-								//console.log("RESULTS: " + results);
-								return results;
-								//this.setState({ players: results });
-								//for(var i = 0; i < results.length; i++) {
-
-									/*React.createElement(Player, {
-										key: player.id,
-										player: player,
-										handleDeletePlayer: this.deletePlayer,
-										handleEditPlayer: this.updatePlayer
-									});*/
-								//}
-							}
-							else
-							{}
-							//_this.setState({
-							//	edit: false
-							//});
-							//return _this.props.handleEditRecord(_this.props.record, data);
+							_this.setState({players: data['content']['players']});
+							_this.refs.num_player_results.innerText = data['content']['players'].length;
 						}
 					};
 				})(this)
 			});
-
+		}
+		else {
+			FUSION.get.node("num_player_results").innerHTML = 0;
 		}
 	},
 
@@ -102,15 +65,18 @@ this.Players = React.createClass({
 											  onChange: this.handleSearch}),
 				'Search Players'),
 			React.DOM.hr(null),
+			React.DOM.div({style:{float:"left", width:"100%"}},
+				React.createElement("span", {style:{float:"left", marginRight:"10px"}}, "Results: "),
+				React.createElement("span", {id:"num_player_results", ref:"num_player_results", style:{float:"left"}}, "0")),
 			React.DOM.table({
-				className: 'table table-bordered', id: "player_search_table"},
+				className: 'table table-bordered', id: "player_search_table", style: { width: "100%", marginBottom:"20px" }},
 				React.DOM.thead(null,
 					React.DOM.tr(null,
 						React.createElement("th", {
-							style:{width:"300px", textAlign:"left"}},
+							style:{textAlign:"left"}},
 							'Player Name'),
 						React.createElement("th", {
-							style:{width:"300px"}},
+							style:{}},
 							"Country"))),
 				React.DOM.tbody(null, (function() {
 					var i, len, ref, results;
@@ -127,7 +93,12 @@ this.Players = React.createClass({
 					}
 					return results;
 				}).call(this))
-			)
+			),
+			React.DOM.div({className:"w100fl"},
+				React.createElement("h3", {className:"w100fl"}, "Player Info"),
+				React.createElement("div", {className:"w100fl"},
+					React.createElement("div", {className:"w100fl", id:"player_name"}),
+					React.createElement("div", {className:"w100fl", id:"total_money"})))
 		);
 	}
 
