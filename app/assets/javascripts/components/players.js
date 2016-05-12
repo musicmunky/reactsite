@@ -2,7 +2,8 @@ this.Players = React.createClass({
 
 	getInitialState: function() {
 		return {
-			players: this.props.data
+			players: this.props.data,
+			selectedPlayer: null
 		};
 	},
 
@@ -20,6 +21,40 @@ this.Players = React.createClass({
 		return this.setState({
 			players: players
 		});
+	},
+
+	getPlayerInfo: function(pid) {
+		if(!FUSION.lib.isBlank(pid)) {
+			return $.ajax({
+				method: 'POST',
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("X-CSRF-Token", jQuery('meta[name="csrf-token"]').attr('content'));
+					xhr.setRequestHeader("Accept", "text/html");
+				},
+				url: "/players/1/getPlayerInfo",
+				dataType: 'JSON',
+				data: {
+					player_id: pid
+				},
+				success: (function(_this) {
+					return function(data) {
+						if(data['status'] == "success") {
+							var career = data['content']['player']['career'];
+							var bio = data['content']['player']['bio'];
+// 							console.log("PLAYER INFO: " + JSON.stringify(bio));
+// 							console.log("CAREER INFO: " + JSON.stringify(career));
+
+							var pname = bio['plrs'][0]['personalInfo']['name']['first'] + " " + bio['plrs'][0]['personalInfo']['name']['last'];
+							//_this.refs.player_name.innerText = pname;
+							//_this.setState({players: data['content']['players']});
+							_this.setState({selectedPlayer: {name: pname, money: 0}});
+						}
+					};
+				})(this)
+			});
+		}
+
+		return false;
 	},
 
 	handleSearch: function(e) {
@@ -41,14 +76,10 @@ this.Players = React.createClass({
 					return function(data) {
 						if(data['status'] == "success") {
 							_this.setState({players: data['content']['players']});
-							_this.refs.num_player_results.innerText = data['content']['players'].length;
 						}
 					};
 				})(this)
 			});
-		}
-		else {
-			FUSION.get.node("num_player_results").innerHTML = 0;
 		}
 	},
 
@@ -67,7 +98,7 @@ this.Players = React.createClass({
 			React.DOM.hr(null),
 			React.DOM.div({style:{float:"left", width:"100%"}},
 				React.createElement("span", {style:{float:"left", marginRight:"10px"}}, "Results: "),
-				React.createElement("span", {id:"num_player_results", ref:"num_player_results", style:{float:"left"}}, "0")),
+				React.createElement("span", {id:"num_player_results", style:{float:"left"}}, this.state.players.length)),
 			React.DOM.table({
 				className: 'table table-bordered', id: "player_search_table", style: { width: "100%", marginBottom:"20px" }},
 				React.DOM.thead(null,
@@ -88,13 +119,14 @@ this.Players = React.createClass({
 							key: player.id,
 							player: player,
 							handleDeletePlayer: this.deletePlayer,
-							handleEditPlayer: this.updatePlayer
+							handleEditPlayer: this.updatePlayer,
+							playerSelected: this.getPlayerInfo.bind(this, player.id)
 						}));
 					}
 					return results;
 				}).call(this))
 			),
-			React.createElement(PlayerInfo, null)
+			React.createElement(PlayerInfo, this.state.selectedPlayer)
 		);
 	}
 
