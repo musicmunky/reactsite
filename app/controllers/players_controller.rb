@@ -26,28 +26,45 @@ class PlayersController < ApplicationController
 			career_info = {}
 			bio_info = {}
 
+	 		logger.debug "Attempting to retrieve information for player id #{ppid}..."
+
 			begin
 				uri_career  = URI("http://www.pgatour.com/data/players/#{ppid}/career.json")
-				json_career = Net::HTTP.get(uri_career)
-				career_info = JSON.parse(json_career)
+				res_career = Net::HTTP.get_response(uri_career)
+				if res_career.code == "200"
+					career_info = JSON.parse(res_career.body)
+			 		logger.debug "Found career JSON for player id #{ppid}"
+				else
+					raise "error code #{res_career.code}"
+				end
 			rescue => c_err
-				career_info['error'] = true
+				career_info['error_occurred'] = true
 				career_info['error_message'] = c_err.message
+				logger.debug "Error occurred retrieving career JSON data for player #{ppid}: #{c_err.message}"
 			end
 
 			begin
 				uri_bio	 = URI("http://www.pgatour.com/data/players/#{ppid}/bio.json")
-				json_bio = Net::HTTP.get(uri_bio)
-				bio_info = JSON.parse(json_bio)
+				res_bio = Net::HTTP.get_response(uri_bio)
+				if res_bio.code == "200"
+					bio_info = JSON.parse(res_bio.body)
+			 		logger.debug "Found bio JSON for player id #{ppid}"
+				else
+					raise "error code #{res_bio.code}"
+				end
 			rescue => b_err
-				bio_info['error'] = true
+				bio_info['error_occurred'] = true
 				bio_info['error_message'] = b_err.message
+				logger.debug "Error occurred retrieving bio JSON data for player #{ppid}: #{b_err.message}"
 			end
 
 			player = {}
 			player['career']	= career_info
 			player['bio']		= bio_info
 			player['name']		= "#{@player.nameF} #{@player.nameL}"
+			player['player_id'] = ppid
+			player['headshot']  = "http://i.pgatour.com/image/upload/t_headshots_leaderboard_l/headshots_#{ppid}.png"
+
 			content['player']	= player
 
 			response['status']  = "success"

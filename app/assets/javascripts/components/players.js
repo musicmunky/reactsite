@@ -3,7 +3,7 @@ this.Players = React.createClass({
 	getInitialState: function() {
 		return {
 			players: this.props.data,
-			selectedPlayer: null
+			selectedPlayer: {img_visibility:"hidden"}
 		};
 	},
 
@@ -25,13 +25,16 @@ this.Players = React.createClass({
 
 	getPlayerInfo: function(pid) {
 		if(!FUSION.lib.isBlank(pid)) {
+
+			this.setState({selectedPlayer: {headshot:"/assets/big_loading.gif", img_visibility:"visible"}});
+
 			return $.ajax({
 				method: 'POST',
 				beforeSend: function(xhr) {
 					xhr.setRequestHeader("X-CSRF-Token", jQuery('meta[name="csrf-token"]').attr('content'));
 					xhr.setRequestHeader("Accept", "text/html");
 				},
-				url: "/players/1/getPlayerInfo",
+				url: "/players/" + pid + "/getPlayerInfo",
 				dataType: 'JSON',
 				data: {
 					player_id: pid
@@ -39,12 +42,30 @@ this.Players = React.createClass({
 				success: (function(_this) {
 					return function(data) {
 						if(data['status'] == "success") {
-							var career = data['content']['player']['career'];
-							var bio = data['content']['player']['bio'];
-							var pname = data['content']['player']['name'];
-							_this.setState({selectedPlayer: {name: pname, money: 0}});
+							var player = data['content']['player'];
+							var career = player['career'];
+							var bio    = player['bio'];
+							var pname  = player['name'];
+							var img    = player['headshot'];
+							var cash = "";
+
+							if(!('error_occurred' in career)){
+								cash = career['plrs'][0]['combinedMoney'];
+								cash = cash.replace(/\D/g,'');
+								cash = "$" + cash.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							}
+
+							if(!('error_occurred' in bio)) {
+								if(cash == "$" || FUSION.lib.isBlank(cash)) {
+									cash = bio['plrs'][0]['personalInfo']['combTourMoney'];
+									cash = cash.replace(/\D/g,'');
+									cash = "$" + cash.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+								}
+							}
+
+							cash = cash.match(/^\$?(\d{1,3})(,\d{3})*?$/) ? cash : "N/A";
+							_this.setState({selectedPlayer: {name: pname, money: cash, headshot: img, img_visibility:"visible"}});
 // 							console.log("PLAYER INFO: " + JSON.stringify(bio));
-// 							console.log("CAREER INFO: " + JSON.stringify(career));
 						}
 					};
 				})(this)
