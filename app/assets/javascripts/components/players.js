@@ -48,6 +48,14 @@ this.Players = React.createClass({
 							var pname  = player['name'];
 							var img    = player['headshot'];
 							var cash = "";
+							var ctry = "";
+							var city = "";
+							var pfrm = "";
+							var hght = "";
+							var wght = "";
+							var pfrm = [];
+							var plce = [];
+							var info = {};
 
 							if(!('error_occurred' in career)){
 								cash = career['plrs'][0]['combinedMoney'];
@@ -56,6 +64,17 @@ this.Players = React.createClass({
 							}
 
 							if(!('error_occurred' in bio)) {
+								info = bio['plrs'][0]['personalInfo'];
+								var hghttmp = info['height'].trim().split("-");
+								hght = hghttmp.length > 1 ? hghttmp[0] + " feet, " + hghttmp[1] + " inches" : hghttmp[0] + " feet";
+								wght = info['weight'] + "lbs";
+
+ 								pfrm = info['cityPlaysFrm'].split(/\s*;\s*/);
+								plce = info['birthPlace'].split(/,\s*/);
+								if(plce.length > 0) {
+									ctry = plce[plce.length - 1];
+									city = pfrm[0];
+								}
 								if(cash == "$" || FUSION.lib.isBlank(cash)) {
 									cash = bio['plrs'][0]['personalInfo']['combTourMoney'];
 									cash = cash.replace(/\D/g,'');
@@ -64,8 +83,7 @@ this.Players = React.createClass({
 							}
 
 							cash = cash.match(/^\$?(\d{1,3})(,\d{3})*?$/) ? cash : "N/A";
-							_this.setState({selectedPlayer: {name: pname, money: cash, headshot: img, img_visibility:"visible"}});
-// 							console.log("PLAYER INFO: " + JSON.stringify(bio));
+							_this.setState({selectedPlayer: {name: pname, money: cash, headshot: img, img_visibility:"visible", country: ctry, height:hght, weight:wght}});
 						}
 					};
 				})(this)
